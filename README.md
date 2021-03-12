@@ -26,9 +26,6 @@
 * [Documentation](#documentation)
 * [Versioning](#versioning)
 * [Creators](#creators)
-* [Community](#community)
-* [Copyright and License](#copyright-and-license)
-
 ## Versions
 
 https://github.com/Santosh-Pandey/React-Core-UI-Dashboard.git
