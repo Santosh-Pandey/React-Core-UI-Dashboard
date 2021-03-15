@@ -24,6 +24,9 @@ import 'datatables.net-buttons/js/buttons.print';
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 
+import RcIf, {RcElse} from 'rc-if';
+
+
 window.JSZip = JSZip;
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.pdfMake = pdfMake;
@@ -37,6 +40,7 @@ export default class Displayemployee extends Component {
     this.state = {
       alert: null,
       isActive: true,
+      showContainerblock:false,
       errormsg: null,
       singleEmp: [],
       data: [],
@@ -155,6 +159,7 @@ export default class Displayemployee extends Component {
       const empdata = result.response.data;
       this.setState({
         isActive: false,
+        showContainerblock:true,
         data: empdata,
       });
 
@@ -221,70 +226,73 @@ export default class Displayemployee extends Component {
           spinner
           text="Loading Please Wait......"
         >
+
+
           {/* Content Wrapper. Contains page content */}
           <div className="content-wrapper">
             {/* Content Header (Page header) */}
+            <RcIf if={this.state.showContainerblock===true} >
+                  {/* Main content */}
+                  <section className="content">
+                    {/* Default box */}
+                    <div className="card card-primary">
+                      <div className="card-header">
+                        <h3 className="card-title">All Employee's Details</h3>
+                      </div>
+                      <div className="card-body p-3">
+                        {this.state.alert}
 
-            {/* Main content */}
-            <section className="content">
-              {/* Default box */}
-              <div className="card card-primary">
-                <div className="card-header">
-                  <h3 className="card-title">All Employee's Details</h3>
-                </div>
-                <div className="card-body p-3">
-                  {this.state.alert}
-
-                  <table id="example" className="display">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>BVN</th>
-                        <th>Taxpayer ID</th>
-                        <th>TIN</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Gross Income</th>
-                        <th>Edit</th>
-                        <th>Details</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* onClick={this.showModal()} */}
-                      {this.state.data.map((result, i) => {
-                        return (
-                          <tr key={i}>
-                            <td>{result.id}</td>
-                            <td>{result.first_name + "" + result.last_name}</td>
-                            <td>{result.bvn}</td>
-                            <td>{result.taxpayer_id}</td>
-                            <td>{result.tin}</td>
-                            <td>{result.email}</td>
-                            <td>{result.phone}</td>
-                            <td>{result.gross_income}</td>
-                            <td>
-                              {/* <button type="button" class="btn btn-danger" onClick={() => this.showModalEditAction(result.id)}> */}
-                              <Link type="button" class="btn btn-danger" to={{ pathname: '/edit', state: { id: result.id} }}>
-                                <i class="fas fa-edit"></i> Edit
-                              </Link>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-info" onClick={() => this.showModalViewAction(result.id)}>
-                                <i class="fas fa-eye"></i> View
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-                {/* /.card-body */}
-              </div>
-              {/* /.card */}
-            </section>
-            {/* /.content */}
+                        <table id="example" className="display">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Name</th>
+                              <th>BVN</th>
+                              <th>Taxpayer ID</th>
+                              <th>TIN</th>
+                              <th>Email</th>
+                              <th>Phone</th>
+                              <th>Gross Income</th>
+                              <th>Edit</th>
+                              <th>Details</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* onClick={this.showModal()} */}
+                            {this.state.data.map((result, i) => {
+                              return (
+                                <tr key={i}>
+                                  <td>{result.id}</td>
+                                  <td>{result.first_name + "" + result.last_name}</td>
+                                  <td>{result.bvn}</td>
+                                  <td>{result.taxpayer_id}</td>
+                                  <td>{result.tin}</td>
+                                  <td>{result.email}</td>
+                                  <td>{result.phone}</td>
+                                  <td>{result.gross_income}</td>
+                                  <td>
+                                    {/* <button type="button" class="btn btn-danger" onClick={() => this.showModalEditAction(result.id)}> */}
+                                    <Link type="button" class="btn btn-danger" to={{ pathname: '/edit', state: { id: result.id} }}>
+                                      <i class="fas fa-edit"></i> Edit
+                                    </Link>
+                                  </td>
+                                  <td>
+                                    <button type="button" class="btn btn-info" onClick={() => this.showModalViewAction(result.id)}>
+                                      <i class="fas fa-eye"></i> View
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                      {/* /.card-body */}
+                    </div>
+                    {/* /.card */}
+                  </section>
+                  {/* /.content */}
+            </RcIf>
           </div>
           {/* /.content-wrapper */}
 
